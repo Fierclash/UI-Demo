@@ -1,0 +1,21 @@
+/// 
+
+using UnityEngine;
+using UnityEditor;
+
+	#ROOTNAMESPACEBEGIN#
+public class #SCRIPTNAME# : EditorWindow
+{
+	[MenuItem("Window/#SCRIPTNAME#")]
+	public static void Init()
+	{
+		var window = (#SCRIPTNAME#)GetWindow(typeof(#SCRIPTNAME#));
+		window.Show();
+	}
+
+	public void OnGUI()
+	{
+		#NOTRIM#
+	}
+}
+#ROOTNAMESPACEEND#

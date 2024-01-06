@@ -1,0 +1,21 @@
+/// 
+
+using UnityEngine;
+using UnityEditor;
+
+	#ROOTNAMESPACEBEGIN#
+//[CustomEditor(typeof())]
+//[CanEditMultipleObjects]
+public class #SCRIPTNAME# : Editor
+{
+	public void OnEnable()
+	{
+		// var = ()target;
+	}
+
+	public override void OnInspectorGUI()
+	{
+		#NOTRIM#
+	}
+}
+#ROOTNAMESPACEEND#
