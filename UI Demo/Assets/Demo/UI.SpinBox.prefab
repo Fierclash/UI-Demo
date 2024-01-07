@@ -524,9 +524,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6243476193748296039}
   - component: {fileID: 7464311764770506704}
+  - component: {fileID: 5459917754058289110}
   - component: {fileID: 4540789139604799319}
-  - component: {fileID: 4710197332006985912}
   - component: {fileID: 1935937316678940941}
+  - component: {fileID: 4710197332006985912}
+  - component: {fileID: 2672493875838707157}
   m_Layer: 5
   m_Name: UI.SpinBox
   m_TagString: Untagged
@@ -567,6 +569,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6243476193748296032}
   m_CullTransparentMesh: 1
+--- !u!225 &5459917754058289110
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6243476193748296032}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &4540789139604799319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -587,6 +601,32 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1935937316678940941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6243476193748296032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!114 &4710197332006985912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,7 +657,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1935937316678940941
+--- !u!114 &2672493875838707157
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -626,23 +666,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6243476193748296032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 052f72ca15001084291e3a573949f628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
+  host: {fileID: 6243476193748296039}
+  canvasGroup: {fileID: 5459917754058289110}
+  labelText: {fileID: 7490397977303994505}
+  valueText: {fileID: 8542093635055490852}
+  decrementButton: {fileID: 5463004692001973711}
+  incrementButton: {fileID: 6043114264817155660}
 --- !u!1 &7711368142590337909
 GameObject:
   m_ObjectHideFlags: 0
