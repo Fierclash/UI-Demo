@@ -3,7 +3,6 @@
 
 using System.Linq;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace Demo
 {

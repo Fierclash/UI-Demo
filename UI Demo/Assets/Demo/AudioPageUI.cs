@@ -70,7 +70,7 @@ namespace Demo
 									masterVolume,
 									minVolume,
 									maxVolume,
-									masterVolume.ToString("0%"));
+									masterVolume.ToString("0%")); 
 			float sfxVolume = settings.audioSettings.sfxVolume;
 			UILogic.SetSliderUIField(audioPage.sfxSlider,
 									config.sfxLabel,
@@ -85,7 +85,7 @@ namespace Demo
 									minVolume,
 									maxVolume,
 									bgmVolume.ToString("0%"));
-
+			
 			// Subscribe to UI events
 			audioPage.masterSlider.slider.onValueChanged.AddListener(HandleOnMasterChanged);
 			audioPage.sfxSlider.slider.onValueChanged.AddListener(HandleOnSFXChanged);
