@@ -41,6 +41,16 @@ namespace Demo
 			field.incrementButton.interactable = index < options.Length - 1;
 		}
 
+		public static void SetSliderUIField(SliderUIField field, string label,
+			float value, float min, float max, string valueLabel)
+		{
+			field.labelText.SetText(label);
+			field.slider.minValue = min;
+			field.slider.maxValue = max;
+			field.slider.value = value;
+			field.valueText.SetText(valueLabel);
+		}
+
 		public static void DecrementSpinBoxValue(SpinBoxUIField field, string[] options,
 			ref int index)
 		{

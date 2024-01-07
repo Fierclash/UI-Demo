@@ -19,3 +19,7 @@ MonoBehaviour:
     antiAliasing: 1
     vsync: 1
     maxFrameRate: 30
+  audioSettings:
+    masterVolume: 1
+    sfxVolume: 1
+    bgmVolume: 1

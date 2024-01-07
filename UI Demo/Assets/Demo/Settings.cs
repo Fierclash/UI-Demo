@@ -9,5 +9,6 @@ namespace Demo
 	public class Settings : ScriptableObject
 	{
 		public DisplaySettings displaySettings;
+		public AudioSettings audioSettings;
 	}
 }
