@@ -3,6 +3,7 @@
 
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace Demo
 {
@@ -28,6 +29,8 @@ namespace Demo
 			handler.config.antiAliasingLabel = "Anti-Aliasing";
 			handler.config.vsyncLabel = "V-Sync";
 			handler.config.maxFrameRateLabel = "Frame Rate Limit";
+			handler.config.enableLabel = "ENABLED";
+			handler.config.disableLabel = "DISABLED";
 			handler.config.displayModes = new string[]
 			{ 
 				"Fullscreen", 
@@ -101,24 +104,30 @@ namespace Demo
 			maxFrameRatesIndex = Mathf.Max(config.maxFrameRates.ToList().FindIndex(x => x == displaySettings.maxFrameRate), 0); // Ensure index is non-negative
 			
 			// Update UI to match Config and Settings data
-			displayPage.displayModeDropdown.dropdown.ClearOptions();
-			displayPage.displayModeDropdown.dropdown.AddOptions(config.displayModes.ToList());
-			displayPage.displayModeDropdown.dropdown.value = displayModeIndex;
-			displayPage.displayModeDropdown.labelText.SetText(config.displayModeLabel);
-			displayPage.screenResolutionDropdown.dropdown.ClearOptions();
-			displayPage.screenResolutionDropdown.dropdown.AddOptions(config.screenResolutions.Select(x => string.Concat(x.x, "x", x.y)).ToList());
-			displayPage.screenResolutionDropdown.dropdown.value = screenResolutionIndex;
-			displayPage.screenResolutionDropdown.labelText.SetText(config.screenResolutionLabel);
-			displayPage.antiAliasingToggle.toggle.isOn = displaySettings.antiAliasing;
-			displayPage.antiAliasingToggle.valueText.SetText(displaySettings.antiAliasing ? config.enableLabel : config.disableLabel);
-			displayPage.antiAliasingToggle.labelText.SetText(config.antiAliasingLabel);
-			displayPage.vsyncToggle.toggle.isOn = displaySettings.vsync;
-			displayPage.vsyncToggle.valueText.SetText(displaySettings.vsync ? config.enableLabel : config.disableLabel);
-			displayPage.vsyncToggle.labelText.SetText(config.vsyncLabel);
-			displayPage.maxFrameRateSpinBox.valueText.SetText(config.maxFrameRateLabels[maxFrameRatesIndex]);
-			displayPage.maxFrameRateSpinBox.decrementButton.interactable = maxFrameRatesIndex > 0;
-			displayPage.maxFrameRateSpinBox.incrementButton.interactable = maxFrameRatesIndex < config.maxFrameRateLabels.Length - 1;
-			displayPage.maxFrameRateSpinBox.labelText.SetText(config.maxFrameRateLabel);
+			UILogic.SetDropdownUIField(displayPage.displayModeDropdown,
+										config.displayModeLabel,
+										config.displayModes,
+										displayModeIndex);
+			var resolutionLabels = config.screenResolutions.Select(x => string.Concat(x.x, "x", x.y))
+															.ToArray();
+			UILogic.SetDropdownUIField(displayPage.screenResolutionDropdown,
+										config.screenResolutionLabel,
+										resolutionLabels,
+										screenResolutionIndex);
+			UILogic.SetToggleUIField(displayPage.antiAliasingToggle,
+										config.antiAliasingLabel,
+										displaySettings.antiAliasing,
+										config.enableLabel,
+										config.disableLabel);
+			UILogic.SetToggleUIField(displayPage.vsyncToggle,
+										config.vsyncLabel,
+										displaySettings.vsync,
+										config.enableLabel,
+										config.disableLabel);
+			UILogic.SetSpinBoxUIField(displayPage.maxFrameRateSpinBox,
+										config.maxFrameRateLabel,
+										config.maxFrameRateLabels,
+										maxFrameRatesIndex);
 
 			// Subscribe to UI events
 			displayPage.displayModeDropdown.dropdown.onValueChanged.AddListener(HandleOnDisplayModeChanged);
@@ -144,6 +153,15 @@ namespace Demo
 		{
 			displayModeIndex = value;
 			settings.displaySettings.displayMode = value;
+			FullScreenMode fullscreenMode;
+			switch (value)
+			{
+				case 0: fullscreenMode = FullScreenMode.MaximizedWindow; break;
+				case 1: fullscreenMode = FullScreenMode.FullScreenWindow; break;
+				case 2: fullscreenMode = FullScreenMode.Windowed; break;
+				default: fullscreenMode = FullScreenMode.Windowed; break;
+			}
+			Screen.SetResolution(Screen.width, Screen.height, fullscreenMode);
 		}
 
 		private void HandleOnScreenResolutionChanged(int value)
@@ -151,36 +169,49 @@ namespace Demo
 			Vector2Int resolution = config.screenResolutions[value];
 			settings.displaySettings.screenResolutionWidth = resolution.x;
 			settings.displaySettings.screenResolutionHeight = resolution.y;
+			Screen.SetResolution(resolution.x, resolution.y, Screen.fullScreen);
 		}
 
 		private void HandleOnAntiAliasingChanged(bool value)
 		{
+			UILogic.SetToggleUIFieldValueText(displayPage.antiAliasingToggle,
+												value,
+												config.enableLabel,
+												config.disableLabel);
 			settings.displaySettings.antiAliasing = value;
-			displayPage.antiAliasingToggle.valueText.SetText(value ? config.enableLabel : config.disableLabel);
+			Camera.main.GetComponent<UniversalAdditionalCameraData>().antialiasing = value ? 
+																					AntialiasingMode.SubpixelMorphologicalAntiAliasing :
+																					AntialiasingMode.None;
 		}
 
 		private void HandleOnVSyncChanged(bool value)
 		{
+			UILogic.SetToggleUIFieldValueText(displayPage.vsyncToggle,
+												value,
+												config.enableLabel,
+												config.disableLabel);
 			settings.displaySettings.vsync = value;
-			displayPage.vsyncToggle.valueText.SetText(value ? config.enableLabel : config.disableLabel);
+			QualitySettings.vSyncCount = value ? 1 : 0;
 		}
 
 		private void HandleOnMaxFrameRateDecrement()
 		{
-			maxFrameRatesIndex = Mathf.Max(maxFrameRatesIndex - 1, 0);
-			settings.displaySettings.maxFrameRate = config.maxFrameRates[maxFrameRatesIndex];
-			displayPage.maxFrameRateSpinBox.valueText.SetText(config.maxFrameRateLabels[maxFrameRatesIndex]);
-			displayPage.maxFrameRateSpinBox.decrementButton.interactable = maxFrameRatesIndex > 0;
-			displayPage.maxFrameRateSpinBox.incrementButton.interactable = maxFrameRatesIndex < config.maxFrameRateLabels.Length - 1;
+			UILogic.DecrementSpinBoxValue(displayPage.maxFrameRateSpinBox,
+											config.maxFrameRateLabels,
+											ref maxFrameRatesIndex);
+			int frameRate = config.maxFrameRates[maxFrameRatesIndex];
+			settings.displaySettings.maxFrameRate = frameRate;
+			Application.targetFrameRate = frameRate;
 		}
 
 		private void HandleOnMaxFrameRateIncrement()
 		{
-			maxFrameRatesIndex = Mathf.Min(maxFrameRatesIndex + 1, config.maxFrameRates.Length - 1);
-			settings.displaySettings.maxFrameRate = config.maxFrameRates[maxFrameRatesIndex];
-			displayPage.maxFrameRateSpinBox.valueText.SetText(config.maxFrameRateLabels[maxFrameRatesIndex]);
-			displayPage.maxFrameRateSpinBox.decrementButton.interactable = maxFrameRatesIndex > 0;
-			displayPage.maxFrameRateSpinBox.incrementButton.interactable = maxFrameRatesIndex < config.maxFrameRateLabels.Length - 1;
+			UILogic.IncrementSpinBoxValue(displayPage.maxFrameRateSpinBox,
+											config.maxFrameRateLabels,
+											ref maxFrameRatesIndex);
+			int frameRate = config.maxFrameRates[maxFrameRatesIndex];
+			settings.displaySettings.maxFrameRate = frameRate;
+			Application.targetFrameRate = frameRate;
 		}
 	}
 }
