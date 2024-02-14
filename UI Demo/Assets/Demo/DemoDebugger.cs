@@ -1,5 +1,6 @@
 /// #DebugScript
 
+using System.Collections;
 using UnityEngine;
 
 namespace Demo
@@ -12,12 +13,20 @@ namespace Demo
 		[Header("Settings")]
 		[SerializeField] private bool inputEnabled;
 		[SerializeField] private KeyCode toggleUIKey;
-		
-		private void Start()
+
+		[ContextMenu("T")]
+		private void OnEnable()
 		{
 			Debug.Log("[DEMO_DEBUGGER] Starting Debugger.");
-			controller.InitController();
-			controller.DisableUI();
+
+			StartCoroutine(_Load()); // Coroutine since audio initialization has issues when calle during OnEnable
+
+			IEnumerator _Load()
+			{
+				yield return null;
+				controller.InitController();
+				controller.DisableUI();
+			}
 		}
 
 		private void Update()

@@ -1,11 +1,11 @@
-/// 
+/// #LogicScript
 
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Demo
 {
-	public class GeneralPageUIExternalHandler
+	public class GeneralPageUIHandler
 	{
 		public Button quitButton;
 		public GameObject dialogGameObject;

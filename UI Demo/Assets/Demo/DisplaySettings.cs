@@ -1,7 +1,5 @@
-/// Data Struct Script
+/// #DataStructScript
 /// Holds data for game display settings.
-
-using UnityEngine;
 
 namespace Demo
 {
