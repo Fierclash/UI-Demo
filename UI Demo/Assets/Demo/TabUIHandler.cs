@@ -1,11 +1,11 @@
-/// 
+/// #LogicScript
 
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Demo
 {
-	public class TabUIHandler : MonoBehaviour
+	public class TabUIHandler
 	{
 		public Button generalPageButton;
 		public Button displayButton;
@@ -13,11 +13,6 @@ namespace Demo
 		public GameObject generalPageGameObject;
 		public GameObject displayPageGameObject;
 		public GameObject audioPageGameObject;
-
-		private void Awake()
-		{
-			Link();
-		}
 
 		public void Link()
 		{

@@ -16,6 +16,7 @@ namespace Demo
 		private void Start()
 		{
 			Debug.Log("[DEMO_DEBUGGER] Starting Debugger.");
+			controller.InitController();
 			controller.DisableUI();
 		}
 
