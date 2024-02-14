@@ -1,0 +1,15 @@
+{
+    "displaySettings": {
+        "displayMode": 0,
+        "screenResolutionWidth": 1366,
+        "screenResolutionHeight": 768,
+        "antiAliasing": true,
+        "vsync": true,
+        "maxFrameRate": 30
+    },
+    "audioSettings": {
+        "masterVolume": 0.1826978325843811,
+        "SFXVolume": 1.0,
+        "BGMVolume": 1.0
+    }
+}
