@@ -27,6 +27,7 @@ namespace Demo
 		public void InitController()
 		{
 			_LoadSettings();
+			_LoadDisplaySettings();
 			_LoadAudioSettings();
 
 			_InitTabUIHandler();
@@ -40,15 +41,28 @@ namespace Demo
 				SettingsPortLogic.ImportSettingsFromJson(ref settings, Application.streamingAssetsPath + "/Settings.json");
 			}
 
+			void _LoadDisplaySettings()
+			{
+				DisplaySettingsLogic.SetDisplayMode(settings.displaySettings.displayMode);
+				Screen.SetResolution(settings.displaySettings.screenResolutionWidth,
+									settings.displaySettings.screenResolutionHeight,
+									Screen.fullScreen);
+				DisplaySettingsLogic.SetAntiAliasing(settings.displaySettings.antiAliasing);
+				DisplaySettingsLogic.SetVSync(settings.displaySettings.vsync);
+				Application.targetFrameRate = settings.displaySettings.maxFrameRate;
+			}
+			
 			void _LoadAudioSettings()
 			{
-				Debug.Log(settings.audioSettings.SFXVolume);
+				float masterVolume = AudioUtility.ClampVolumePercent(settings.audioSettings.masterVolume);
 				mixerGroup.audioMixer.SetFloat("MasterVolume", 
-												AudioUtility.ConvertPercentToDecibels(settings.audioSettings.masterVolume));
+												AudioUtility.ConvertPercentToDecibels(masterVolume));
+				float SFXVolume = AudioUtility.ClampVolumePercent(settings.audioSettings.SFXVolume);
 				mixerGroup.audioMixer.SetFloat("SFXVolume", 
-												AudioUtility.ConvertPercentToDecibels(settings.audioSettings.SFXVolume));
+												AudioUtility.ConvertPercentToDecibels(SFXVolume));
+				float BGMVolume = AudioUtility.ClampVolumePercent(settings.audioSettings.BGMVolume);
 				mixerGroup.audioMixer.SetFloat("BGMVolume",
-												AudioUtility.ConvertPercentToDecibels(settings.audioSettings.BGMVolume));
+												AudioUtility.ConvertPercentToDecibels(BGMVolume));
 			}
 
 			void _InitTabUIHandler()
@@ -75,6 +89,10 @@ namespace Demo
 				if (quitGameDialogUIHandler == null) quitGameDialogUIHandler = new();
 				quitGameDialogUIHandler.settings = settings;
 				quitGameDialogUIHandler.dialog = quitGameDialogUI;
+
+				quitGameDialogUIHandler.config.messageLabel = "Are you sure you want to quit the game?";
+				quitGameDialogUIHandler.config.acceptLabel = "Quit";
+				quitGameDialogUIHandler.config.declineLabel = "Cancel";
 			}
 
 			void _InitDisplayPageUIHandler()
@@ -126,6 +144,7 @@ namespace Demo
 				audioPageUIHandler.settings = settings;
 				audioPageUIHandler.mixerGroup = mixerGroup;
 				audioPageUIHandler.audioPage = audioPageUI;
+
 				audioPageUIHandler.config.masterLabel = "Master";
 				audioPageUIHandler.config.SFXLabel = "SFX";
 				audioPageUIHandler.config.BGMLabel = "BGM";
