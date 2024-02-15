@@ -1,7 +1,6 @@
 /// #LogicScript
 
 using System.Linq;
-using UnityEngine.Rendering.Universal;
 using UnityEngine;
 
 namespace Demo
