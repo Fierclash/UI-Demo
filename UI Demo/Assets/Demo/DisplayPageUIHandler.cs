@@ -76,15 +76,7 @@ namespace Demo
 		{
 			displayModeIndex = value;
 			settings.displaySettings.displayMode = value;
-			FullScreenMode fullscreenMode;
-			switch (value)
-			{
-				case 0: fullscreenMode = FullScreenMode.MaximizedWindow; break;
-				case 1: fullscreenMode = FullScreenMode.FullScreenWindow; break;
-				case 2: fullscreenMode = FullScreenMode.Windowed; break;
-				default: fullscreenMode = FullScreenMode.Windowed; break;
-			}
-			Screen.SetResolution(Screen.width, Screen.height, fullscreenMode);
+			DisplaySettingsLogic.SetDisplayMode(value);
 		}
 
 		private void HandleOnScreenResolutionChanged(int value)
@@ -102,9 +94,7 @@ namespace Demo
 												config.enableLabel,
 												config.disableLabel);
 			settings.displaySettings.antiAliasing = value;
-			Camera.main.GetComponent<UniversalAdditionalCameraData>().antialiasing = value ?
-																					AntialiasingMode.SubpixelMorphologicalAntiAliasing :
-																					AntialiasingMode.None;
+			DisplaySettingsLogic.SetAntiAliasing(value);
 		}
 
 		private void HandleOnVSyncChanged(bool value)
@@ -114,7 +104,7 @@ namespace Demo
 												config.enableLabel,
 												config.disableLabel);
 			settings.displaySettings.vsync = value;
-			QualitySettings.vSyncCount = value ? 1 : 0;
+			DisplaySettingsLogic.SetVSync(value);
 		}
 
 		private void HandleOnMaxFrameRateDecrement()
