@@ -14,7 +14,9 @@ namespace Demo
 		public Image blockerImage;
 		public Image panelImage;
 		public TextMeshProUGUI labelText;
-		public Button confirmButton;
+		public Button acceptButton;
+		public TextMeshProUGUI acceptText;
 		public Button declineButton;
+		public TextMeshProUGUI declineText;
 	}
 }

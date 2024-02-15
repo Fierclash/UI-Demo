@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 3059108107237441100}
   - component: {fileID: 3059108107237441101}
   m_Layer: 5
-  m_Name: Dialog.Confirm.Button
+  m_Name: Dialog.Decline.Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -368,8 +368,10 @@ MonoBehaviour:
   blockerImage: {fileID: 3059108107550543108}
   panelImage: {fileID: 3059108107550543108}
   labelText: {fileID: 3059108106895761497}
-  confirmButton: {fileID: 3059108108770265571}
+  acceptButton: {fileID: 3059108108770265571}
+  acceptText: {fileID: 3059108108485629107}
   declineButton: {fileID: 3059108107237441101}
+  declineText: {fileID: 3059108107961416867}
 --- !u!1 &3059108107961416865
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,7 +649,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: CONFIRM
+  m_text: ACCEPT
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -729,7 +731,7 @@ GameObject:
   - component: {fileID: 3059108108770265570}
   - component: {fileID: 3059108108770265571}
   m_Layer: 5
-  m_Name: Dialog.Confirm.Button
+  m_Name: Dialog.Accept.Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
